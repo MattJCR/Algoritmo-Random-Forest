@@ -127,7 +127,7 @@ class CleanData:
             df[column] = CleanData._le.fit_transform(df[column].values)
         return df
     
-    def z_score_outliers(df,column,standard_deviation=3):
+    def z_score_outliers(df,column,standard_deviation=1.5):
         '''
         Devuelve los outliers y z_scores de una columna de un dataframe.
         df: 'Requiere de un objecto DataFrame'
@@ -141,6 +141,24 @@ class CleanData:
         z_scores = (df[column] - mean) / std
         outliers = df[(np.abs(z_scores) > standard_deviation)]
         return outliers, z_scores
+    
+    def percetil_based_outlier_detection(df,column,q1=0.25,q3=0.75,k=1.5):
+        '''
+        Devuelve los outliers de una columna de un dataframe.
+        df: 'Requiere de un objecto DataFrame'
+        column: 'Nombre de columna para sacar los outliers'
+        q1: 'Valor de cuartil 1'
+        q3: 'Valor de cuartil 3'
+        k: 'Valor de k para determinar la desviacion como outlier'
+        '''
+        Q1 = df[column].quantile(q1)
+        Q3 = df[column].quantile(q3)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - (k * IQR)
+        upper_bound = Q3 + (k * IQR)
+
+        outliers = df[(df[column] < lower_bound) | (df[column] > upper_bound)]
+        return outliers
     
     def remove_outliers(df,outliers):
         '''
