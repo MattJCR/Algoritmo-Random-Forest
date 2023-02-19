@@ -1,3 +1,5 @@
 # Algoritmo-Random-Forest
 
-https://www.kaggle.com/datasets/thedevastator/european-day-ahead-market-power-prices-by-hour
+https://www.kaggle.com/competitions/spaceship-titanic
+
+https://www.kaggle.com/datasets/thedevastator/airbnb-price-determinants-in-europe
